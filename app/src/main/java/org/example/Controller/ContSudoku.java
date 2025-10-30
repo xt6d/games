@@ -1,4 +1,4 @@
 package org.example.Controller;
 
-public class Sudoku {
+public class ContSudoku {
 }

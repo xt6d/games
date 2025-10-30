@@ -1,4 +1,4 @@
 package org.example.Controller;
 
-public class Connect4 {
+public class ContConnect4 {
 }

@@ -14,7 +14,7 @@ public final class DefaultSceneSwitcher {
             Parent root = FXMLLoader.load(DefaultSceneSwitcher.class.getResource(fxml));
             Scene scene = new Scene(root);
             scene.getStylesheets()
-                    .add(DefaultSceneSwitcher.class.getResource("/style.css").toExternalForm());
+                    .add(DefaultSceneSwitcher.class.getResource("/gameAppStyle.css").toExternalForm());
 
             Stage stage = (Stage) source.getScene().getWindow();
             stage.setScene(scene);

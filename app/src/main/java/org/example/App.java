@@ -19,7 +19,7 @@ public class App extends Application {
             Scene scene = new Scene(root);
             scene.getStylesheets().add(getClass().getResource("/gameAppStyle.css").toExternalForm());
             stage.setTitle("t6ddy-gamas");
-            //stage.getIcons().add(new Image(getClass().getResourceAsStream("/images/image1.png")));
+            //stage.getIcons().add(getClass().getResource("/gameAppStyle.css").toExternalForm());
             stage.setScene(scene);
             stage.show();
         } catch (Exception e) {
