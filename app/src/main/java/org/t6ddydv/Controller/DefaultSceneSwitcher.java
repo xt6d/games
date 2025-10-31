@@ -1,4 +1,4 @@
-package org.example.Controller;
+package org.t6ddydv.Controller;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
