@@ -1,73 +1,126 @@
 package org.example.Controller;
 
+import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.layout.GridPane;
+import javafx.scene.text.Font;
 import org.example.model.TicTacToeGame;
+
 public class ContTicTacToe {
+
+    // 1. Collega i componenti FXML
+    @FXML private GridPane gameGrid;
+    @FXML private Label statusLabel;
+    @FXML private Button backButton;
+    @FXML private Button resetButton;
+
+    // 2. Il controller crea e possiede il modello
     private final TicTacToeGame model;
     private boolean gameOver = false;
 
-    // Callback interfaces
-    public interface UpdateCellListener { void onUpdate(int row, int col, TicTacToeGame.Cell cell); }
-    public interface ResultListener { void onResult(TicTacToeGame.Result result); }
-    public interface InvalidMoveListener { void onInvalidMove(int row, int col); }
-    public interface ResetListener { void onReset(); }
+    // Array per tenere traccia dei bottoni della griglia
+    private final Button[][] gridButtons = new Button[3][3];
 
-    private UpdateCellListener updateCellListener;
-    private ResultListener resultListener;
-    private InvalidMoveListener invalidMoveListener;
-    private ResetListener resetListener;
+    // Riferimento allo SceneSwitcher
+    private final SceneSwitcher sceneSwitch = DefaultSceneSwitcher.INSTANCE;
 
-    public ContTicTacToe(TicTacToeGame model) {
-        this.model = model;
+    // 3. Costruttore senza argomenti (richiesto da FXML)
+    public ContTicTacToe() {
+        this.model = new TicTacToeGame();
     }
 
-    // Listener setters
-    public void setUpdateCellListener(UpdateCellListener l) { this.updateCellListener = l; }
-    public void setResultListener(ResultListener l) { this.resultListener = l; }
-    public void setInvalidMoveListener(InvalidMoveListener l) { this.invalidMoveListener = l; }
-    public void setResetListener(ResetListener l) { this.resetListener = l; }
+    // 4. Metodo Initialize (chiamato da JavaFX dopo il caricamento)
+    @FXML
+    private void initialize() {
+        // Popola la griglia con bottoni cliccabili
+        for (int r = 0; r < 3; r++) {
+            for (int c = 0; c < 3; c++) {
+                Button button = new Button();
+                button.setPrefSize(100.0, 100.0); // Imposta dimensione
+                button.setFont(new Font(40));     // Imposta font grande
 
-    public void click(int row, int col) {
-        if (gameOver) return;
+                final int row = r;
+                final int col = c;
 
-        if (!validIndex(row) || !validIndex(col)) {
-            if (invalidMoveListener != null) invalidMoveListener.onInvalidMove(row, col);
-            return;
+                // Aggiungi l'azione di click
+                button.setOnAction(event -> handleGridClick(row, col));
+
+                gridButtons[r][c] = button;
+                gameGrid.add(button, c, r); // Aggiunge alla griglia (colonna, riga)
+            }
         }
+        updateUI(); // Aggiorna la UI allo stato iniziale
+    }
 
+    // 5. Gestore per i click sulla griglia
+    private void handleGridClick(int row, int col) {
+        if (gameOver) return; // Non fare nulla se il gioco è finito
+
+        // Tenta di fare la mossa sul modello
         boolean moved = model.makeMove(row, col);
+
         if (!moved) {
-            if (invalidMoveListener != null) invalidMoveListener.onInvalidMove(row, col);
+            statusLabel.setText("Mossa non valida!");
             return;
         }
 
-        if (updateCellListener != null) updateCellListener.onUpdate(row, col, model.getCell(row, col));
+        // Aggiorna la UI dopo la mossa
+        updateUI();
 
+        // Controlla il risultato
         TicTacToeGame.Result res = model.getResult();
         if (res != TicTacToeGame.Result.ONGOING) {
             gameOver = true;
-            if (resultListener != null) resultListener.onResult(res);
+            showResult(res);
         }
     }
 
-    // Reset model and notify UI to refresh
-    public void reset() {
+    // 6. Gestori per i bottoni Reset e Back
+    @FXML
+    private void handleResetClick() {
         model.reset();
         gameOver = false;
-        if (resetListener != null) resetListener.onReset();
-        // refresh full board so GUI can repaint each cell
-        if (updateCellListener != null) {
-            for (int r = 0; r < 3; r++)
-                for (int c = 0; c < 3; c++)
-                    updateCellListener.onUpdate(r, c, model.getCell(r, c));
+        updateUI(); // Pulisce la griglia e aggiorna le etichette
+        statusLabel.setText(model.getCurrentPlayer() + " inizia");
+    }
+
+    @FXML
+    private void handleBackClick() {
+        // Usa lo SceneSwitcher che hai già
+        sceneSwitch.change(backButton, "/scenesfxml/mainMenuView.fxml");
+    }
+
+    // 7. Metodi helper per aggiornare la UI
+    private void updateUI() {
+        // Aggiorna ogni bottone della griglia
+        for (int r = 0; r < 3; r++) {
+            for (int c = 0; c < 3; c++) {
+                String text = "";
+                TicTacToeGame.Cell cell = model.getCell(r, c);
+                if (cell == TicTacToeGame.Cell.X) {
+                    text = "X";
+                    gridButtons[r][c].setStyle("-fx-text-fill: blue;");
+                } else if (cell == TicTacToeGame.Cell.O) {
+                    text = "O";
+                    gridButtons[r][c].setStyle("-fx-text-fill: red;");
+                } else {
+                    gridButtons[r][c].setStyle(null); // Resetta lo stile
+                }
+                gridButtons[r][c].setText(text);
+            }
+        }
+        // Aggiorna l'etichetta del turno
+        statusLabel.setText("Turno di: " + model.getCurrentPlayer());
+    }
+
+    private void showResult(TicTacToeGame.Result result) {
+        if (result == TicTacToeGame.Result.DRAW) {
+            statusLabel.setText("Pareggio!");
+        } else if (result == TicTacToeGame.Result.X_WINS) {
+            statusLabel.setText("X Vince!");
+        } else if (result == TicTacToeGame.Result.O_WINS) {
+            statusLabel.setText("O Vince!");
         }
     }
-
-    public TicTacToeGame.Cell getCell(int row, int col) {
-        if (!validIndex(row) || !validIndex(col)) throw new IndexOutOfBoundsException("0..2");
-        return model.getCell(row, col);
-    }
-    public TicTacToeGame.Cell getCurrentPlayer() { return model.getCurrentPlayer(); }
-    public TicTacToeGame.Result getResult() { return model.getResult(); }
-
-    private boolean validIndex(int i) { return i >= 0 && i <= 2; }
 }
