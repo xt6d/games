@@ -1,4 +1,4 @@
-package org.t6ddydv.model;
+package org.example.model;
 
 public class TicTacToeGame {
     public enum Cell { EMPTY, X, O }
@@ -28,7 +28,6 @@ public class TicTacToeGame {
     public Cell getCurrentPlayer() { return current; }
 
     public Result getResult() {
-        // righe/colonne/diagonali
         for (int i = 0; i < 3; i++) {
             if (board[i][0] != Cell.EMPTY && board[i][0] == board[i][1] && board[i][1] == board[i][2])
                 return board[i][0] == Cell.X ? Result.X_WINS : Result.O_WINS;
