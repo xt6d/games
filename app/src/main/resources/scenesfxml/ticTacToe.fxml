@@ -3,22 +3,42 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.Controller.ContTicTacToe">
-    <children>
-        <Button fx:id="backButton" layoutX="25.0" layoutY="25.0" mnemonicParsing="false" onAction="#handleBackClick" text="back to menu" AnchorPane.leftAnchor="25.0" AnchorPane.topAnchor="25.0" />
+<BorderPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.Controller.ContTicTacToe">
+    <top>
+        <AnchorPane prefHeight="80.0" BorderPane.alignment="CENTER">
+            <children>
+                <Button fx:id="backButton" layoutX="25.0" layoutY="25.0" onAction="#handleBackClick" text="back to menu" AnchorPane.leftAnchor="25.0" AnchorPane.topAnchor="25.0" />
+                <Label fx:id="statusLabel" alignment="CENTER" layoutX="150.0" layoutY="30.0" prefHeight="30.0" prefWidth="300.0" text="Tic Tac Toe" AnchorPane.leftAnchor="150.0" AnchorPane.rightAnchor="150.0" AnchorPane.topAnchor="25.0">
+                    <font>
+                        <Font size="24.0" />
+                    </font>
+                </Label>
 
-        <Label fx:id="statusLabel" alignment="CENTER" layoutX="150.0" layoutY="30.0" prefWidth="300.0" text="Tic Tac Toe" AnchorPane.leftAnchor="150.0" AnchorPane.rightAnchor="150.0">
-            <font>
-                <Font size="24.0" />
-            </font>
-        </Label>
-
-        <GridPane fx:id="gameGrid" hgap="5.0" layoutX="150.0" layoutY="80.0" prefHeight="300.0" prefWidth="300.0" vgap="5.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="150.0" AnchorPane.rightAnchor="150.0" AnchorPane.topAnchor="80.0">
+                <Label fx:id="playerXScoreLabel" layoutX="500.0" layoutY="15.0" text="X: 0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="15.0">
+                    <font>
+                        <Font size="18.0" />
+                    </font>
+                </Label>
+                <Label fx:id="playerOScoreLabel" layoutX="500.0" layoutY="45.0" text="O: 0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="45.0">
+                    <font>
+                        <Font size="18.0" />
+                    </font>
+                </Label>
+            </children>
+        </AnchorPane>
+    </top>
+    <center>
+        <GridPane fx:id="gameGrid" hgap="5.0" vgap="5.0"
+                  alignment="CENTER"
+                  maxHeight="300.0" maxWidth="300.0"
+                  prefHeight="300.0" prefWidth="300.0"
+                  BorderPane.alignment="CENTER">
             <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -30,7 +50,11 @@
                 <RowConstraints minHeight="10.0" prefHeight="100.0" vgrow="SOMETIMES" />
             </rowConstraints>
         </GridPane>
-
-        <Button fx:id="resetButton" layoutX="511.0" layoutY="350.0" mnemonicParsing="false" onAction="#handleResetClick" text="Reset" AnchorPane.bottomAnchor="25.0" AnchorPane.rightAnchor="25.0" />
-    </children>
-</AnchorPane>
+    </center>
+    <bottom>
+        <AnchorPane prefHeight="50.0" BorderPane.alignment="CENTER">
+            <children>
+                <Button fx:id="resetButton" layoutX="531.0" layoutY="13.0" onAction="#handleResetClick" text="Reset" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="25.0" />
+            </children>
+        </AnchorPane>
+    </bottom> </BorderPane>

@@ -1,0 +1,113 @@
+/* === Stile Globale === */
+.root {
+    -fx-font-family: "Arial", sans-serif;
+    -fx-background-color: #2D3748; /* Grigio scuro/blu */
+    -fx-text-fill: #EDF2F7; /* Testo quasi bianco */
+}
+
+/* === Stili per Label === */
+.label {
+    -fx-text-fill: #E2E8F0; /* Grigio chiaro */
+}
+
+/* Etichetta Titolo (es. "Tic Tac Toe" in alto) */
+#statusLabel {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #FFFFFF;
+}
+
+/* Etichette Punteggio */
+#playerXScoreLabel {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #63B3ED; /* Blu */
+}
+
+#playerOScoreLabel {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #F56565; /* Rosso */
+}
+
+
+/* === Stili per Bottoni === */
+.button {
+    -fx-background-color: #4A5568; /* Grigio medio */
+    -fx-text-fill: #FFFFFF;
+    -fx-font-weight: bold;
+    -fx-background-radius: 8px; /* Bordi arrotondati */
+    -fx-padding: 8px 16px;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 5, 0, 2, 2);
+}
+
+.button:hover {
+    -fx-background-color: #63B3ED; /* Blu chiaro al passaggio */
+}
+
+.button:pressed {
+    -fx-background-color: #3182CE; /* Blu più scuro */
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 3, 0, 1, 1);
+}
+
+/* Stile specifico per il bottone "back to menu" */
+#backButton {
+    -fx-background-color: #A0AEC0; /* Grigio più chiaro */
+    -fx-text-fill: #2D3748;
+}
+#backButton:hover {
+    -fx-background-color: #CBD5E0;
+}
+#backButton:pressed {
+    -fx-background-color: #A0AEC0;
+}
+
+
+/* === Menu Principale === */
+.menu-image-view {
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.5), 10, 0, 4, 4);
+    -fx-opacity: 0.85;
+    -fx-cursor: hand;
+    -fx-transition: all 0.2s ease-in-out;
+}
+
+.menu-image-view:hover {
+    -fx-opacity: 1.0;
+    -fx-scale-x: 1.05;
+    -fx-scale-y: 1.05;
+}
+
+
+/* === Griglia TicTacToe === */
+.game-grid {
+    -fx-background-color: #4A5568; /* Sfondo griglia */
+    -fx-padding: 5px;
+    -fx-hgap: 5px;
+    -fx-vgap: 5px;
+    -fx-background-radius: 8px;
+}
+
+.game-grid .button {
+    -fx-background-color: #2D3748; /* Sfondo casella */
+    -fx-font-size: 40px;
+    -fx-font-weight: bold;
+    -fx-background-radius: 5px;
+    -fx-padding: 0;
+    -fx-effect: none; /* Rimuove ombra dai bottoni della griglia */
+}
+
+.game-grid .button:hover {
+    -fx-background-color: #4A5568; /* Sfondo casella in hover */
+}
+
+/* Classi per il testo X e O
+  Le imposteremo dal controller Java
+*/
+.x-text {
+    -fx-text-fill: #63B3ED; /* Blu */
+}
+
+.o-text {
+    -fx-text-fill: #F56565; /* Rosso */
+}
